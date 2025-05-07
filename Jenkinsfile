@@ -51,6 +51,20 @@ pipeline {
         '''
       }
     }
+    stage('Debug Credentials') {
+  steps {
+    script {
+      def creds = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
+        com.cloudbees.plugins.credentials.common.StandardUsernameCredentials.class,
+        Jenkins.instance,
+        null,
+        null
+      )
+      creds.each { println "ID: ${it.id}, Username: ${it.username}" }
+    }
+  }
+}
+
 
     stage('Deploy to AWS EC2') {
       steps {
