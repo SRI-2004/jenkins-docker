@@ -1,9 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'maven:3.9.6-eclipse-temurin-17'
-    }
-  }
+  agent any
 
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
@@ -17,6 +13,11 @@ pipeline {
     }
 
     stage('Build order-service') {
+      agent {
+        docker {
+          image 'maven:3.9.6-eclipse-temurin-17'
+        }
+      }
       steps {
         dir('order-service/app') {
           sh 'mvn clean package'
@@ -25,6 +26,11 @@ pipeline {
     }
 
     stage('Build user-service') {
+      agent {
+        docker {
+          image 'maven:3.9.6-eclipse-temurin-17'
+        }
+      }
       steps {
         dir('user-service/app') {
           sh 'mvn clean package'
