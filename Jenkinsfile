@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Clone') {
       steps {
-        git branch: 'develop', url: 'https://github.com/SRI-2004/jenkins.git'
+        git branch: 'develop', url: 'https://github.com/SRI-2004/jenkins-docker.git'
       }
     }
 
