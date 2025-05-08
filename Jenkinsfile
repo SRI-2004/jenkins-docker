@@ -54,23 +54,23 @@ pipeline {
     
 
     stage('Deploy to AWS EC2') {
-      steps {
-        sshagent (credentials: ['ec2-ssh-key']) {
-          sh '''
-            ssh -o StrictHostKeyChecking=no ec2-user@51.20.60.31 '
-              docker pull srinivasansridhar28/order-service:latest &&
-              docker stop order-service || true &&
-              docker rm order-service || true &&
-              docker run -d --name order-service -p 8081:8080 srinivasansridhar28/order-service:latest
+  steps {
+    sshagent (credentials: ['ec2-ssh-key']) {
+      sh '''
+        ssh -o StrictHostKeyChecking=no ubuntu@51.20.60.31 '
+          docker pull srinivasansridhar28/order-service:latest &&
+          docker stop order-service || true &&
+          docker rm order-service || true &&
+          docker run -d --name order-service -p 8081:8080 srinivasansridhar28/order-service:latest
 
-              docker pull srinivasansridhar28/user-service:latest &&
-              docker stop user-service || true &&
-              docker rm user-service || true &&
-              docker run -d --name user-service -p 8082:8080 srinivasansridhar28/user-service:latest
-            '
-          '''
-        }
-      }
+          docker pull srinivasansridhar28/user-service:latest &&
+          docker stop user-service || true &&
+          docker rm user-service || true &&
+          docker run -d --name user-service -p 8082:8080 srinivasansridhar28/user-service:latest
+        '
+      '''
     }
   }
+}
+
 }
